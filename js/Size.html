@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouse Move Counter</title>
+    <script src="Size.js" defer></script>
+</head>
+<body>
+    <h1>Mouse Move Counter</h1>
+    <p>Move your mouse around the page to see the count below:</p>
+    <p id="mouseMoveCount">Mouse moved 0 times</p>
+    <script>
+        const mouseMoveCountElement = document.getElementById('mouseMoveCount');
+        let mouseMoveCount = 0;
+        document.addEventListener('mousemove', () => {
+            mouseMoveCount++;
+            mouseMoveCountElement.textContent = `Mouse moved ${mouseMoveCount} times`;
+        });
+    </script>
+</body>
+</html>
