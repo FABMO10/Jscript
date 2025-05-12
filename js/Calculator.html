@@ -1,0 +1,33 @@
+ <!-- Added a section to include the Countdown Timer -->
+ <h1 style="text-align: center;">Countdown Timer</h1>
+ <script src="Countdown.js"></script>
+
+ <script>
+     // Function to perform the calculation based on user input
+     function performCalculation() {
+         const num1 = parseFloat(document.getElementById('num1').value);
+         const num2 = parseFloat(document.getElementById('num2').value);
+         const operation = document.getElementById('operation').value;
+         const outputDiv = document.getElementById('calculator-output');
+
+         let result;
+         switch (operation) {
+             case 'add':
+                 result = num1 + num2;
+                 break;
+             case 'subtract':
+                 result = num1 - num2;
+                 break;
+             case 'multiply':
+                 result = num1 * num2;
+                 break;
+             case 'divide':
+                 result = num2 !== 0 ? num1 / num2 : 'Error: Division by zero';
+                 break;
+             default:
+                 result = 'Invalid operation';
+         }
+
+         outputDiv.innerHTML = `<p>Result: ${result}</p>`;
+     }
+ </script>
