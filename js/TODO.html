@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To-Do List with Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            padding: 40px;
+        }
+
+        .timer {
+            position: fixed;
+            top: 10px;
+            right: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #todoList {
+            list-style: none;
+            padding: 0;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+
+        #todoList li {
+            background-color: #fff;
+            margin: 10px 0;
+            padding: 10px 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        #inputSection {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        #newItem {
+            padding: 10px;
+            width: 250px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        #addButton {
+            padding: 10px 15px;
+            font-size: 16px;
+            margin-left: 10px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #addButton:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="timer" id="clock">00:00:00</div>
+
+    <h1>My To-Do List</h1>
+
+    <ul id="todoList">
+        <!-- Default items will be added here via JavaScript -->
+    </ul>
+
+    <div id="inputSection">
+        <input type="text" id="newItem" placeholder="Add new task...">
+        <button id="addButton">Add</button>
+    </div>
+
+    <script>
+        // Live clock updater
+        function updateClock() {
+            var now = new Date();
+            var clock = document.getElementById("clock");
+            if (clock) {
+                clock.innerHTML = now.toLocaleTimeString();
+            }
+        }
+
+        // Call updateClock every second
+        setInterval(updateClock, 1000);
+        window.onload = function () {
+            updateClock(); // Initialize immediately
+
+            // Default to-do items
+            var todos = [
+                "Finish homework",
+                "Buy groceries",
+                "Call a friend",
+                "Exercise for 30 minutes",
+                "Read a chapter of a book"
+            ];
+
+            var list = document.getElementById("todoList");
+
+            // Populate the list with default items
+            for (var i = 0; i < todos.length; i++) {
+                var li = document.createElement("li");
+                li.innerText = todos[i];
+                list.appendChild(li);
+            }
+
+            // Add event listener to button
+            var addButton = document.getElementById("addButton");
+            addButton.onclick = function () {
+                var input = document.getElementById("newItem");
+                var newItem = input.value.trim();
+                if (newItem !== "") {
+                    var li = document.createElement("li");
+                    li.innerText = newItem;
+                    list.appendChild(li);
+                    input.value = "";
+                } else {
+                    alert("Please enter a task.");
+                }
+            };
+        };
+    </script>
+
+</body>
+</html>
