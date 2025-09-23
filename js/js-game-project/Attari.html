@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dino Jump Game</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background: #f0f0f0; }
+        #gameCanvas { background: #fff; border: 2px solid #333; margin-top: 20px; }
+        #controls { margin-top: 20px; }
+        #score { font-size: 20px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Dino Jump Game</h1>
+    <div id="controls">
+        <label for="difficulty">Difficulty:</label>
+        <select id="difficulty">
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+        </select>
+        <button onclick="startGame()">Start Game</button>
+    </div>
+    <div id="score">Score: 0</div>
+    <canvas id="gameCanvas" width="600" height="200"></canvas>
+    <p>Press <b>Space</b> to jump!</p>
+    <script src="Attari.js"></script>
+</body>
+</html>
