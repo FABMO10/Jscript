@@ -55,7 +55,13 @@
 // const z = 10;
 //console.log(y>z);//will show false because 5 is not  > 10.
 //we have got >, < , >= ,<= ,==,===,!=,!==
-let agePerson = 50;
-const ageBoy = agePerson - 30;
-const ageGirl = agePerson - 31;
-console.log(ageGirl <=18); // gives boolean value
+// let agePerson = 50;
+// const ageBoy = agePerson - 30;
+// const ageGirl = agePerson - 31;
+//console.log(agePerson - 20 > agePerson - 30); // gives boolean value
+//let x,y;
+//x = y =25-15;// first the calculation be done then operation would continue from right to left 
+//so y= 10 then x = y so x=10 // src mdn table of operator precedence 
+//console.log(x,y);
+//const averageAge = (ageBoy + ageGirl)/2;//use of parenthesis.
+// console.log(averageAge);
