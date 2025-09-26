@@ -65,3 +65,19 @@
 //console.log(x,y);
 //const averageAge = (ageBoy + ageGirl)/2;//use of parenthesis.
 // console.log(averageAge);
+//const firstName = 'Fab';
+//const job = 'DEV';
+//const birthYear = 2004;
+//const now = 2025;
+//const fab = "I'm " + firstName + ', a ' + ( now - birthYear) + ' years old ' + job + "!" ;
+//console.log (fab);//old way of doing it 
+//const fabasshir = `I'm ${firstName}. a ${now - birthYear} years old ${job}!`;
+//console.log(fabasshir); // you can ouput variable ${...} inside this bracket .
+//console.log('string with \n\
+  //  multiple \n\
+   // lines');//old way of doing it 
+    //console.log(`string
+     //   with
+      //  multiple lines
+       // new way`);//new way of doint it using backticks
+
