@@ -90,4 +90,27 @@
 //   console.log(`Fab is too young. wait another ${yearsLeft} years`);
 //}
 //if (age >= 18)  //also we can put arguement directly in if without storing it in a variable
-
+//const birthYear = 2000;
+//let century;
+//if (birthYear <= 2000) {
+// century = 20
+//} else {
+// century = 21
+//}
+//console.log(century); // 20 // also you cant use let inside if block and use it outside of it 
+// error because century is functioning inside the (if) block wont do outside it
+//to make it work we need to declare it outside the block 
+//let century; (as above).
+//challenge 2
+// const massMark = 78;
+// const heighMark = 1.69;
+// const massJohn = 92;
+// const heightJohn = 1.95;
+// const BMIMark = massMark / (heighMark * heighMark);
+// const BMIJohn = massJohn / (heightJohn * heightJohn);
+// if (BMIMark > BMIJohn)
+// {
+  // console.log(`Mark's BMI ${BMIMark}`)
+// }else{
+  // console.log(`John's BMI ${BMIJohn}`)
+// }
