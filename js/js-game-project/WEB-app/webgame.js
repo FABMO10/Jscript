@@ -80,4 +80,14 @@
      //   with
       //  multiple lines
        // new way`);//new way of doint it using backticks
+// const age = 15 ;
+// const isOldEnough = age >= 18 ;
+// if (isOldEnough) {
+//   console.log(`Fab can start driving license`);
+//} 
+// else {
+//   const yearsLeft = 18 - age ;
+//   console.log(`Fab is too young. wait another ${yearsLeft} years`);
+//}
+//if (age >= 18)  //also we can put arguement directly in if without storing it in a variable
 
