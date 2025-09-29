@@ -114,3 +114,33 @@
 // }else{
   // console.log(`John's BMI ${BMIJohn}`)
 // }
+//const inputYear = '1991';
+//console.log(Number(inputYear) );//will show 1991 because we converted the string into number using NUmber function
+//console.log(Number(inputYear) + 18);//will show 2009 because we converted the string into number using Number function 
+//console.log(inputYear + 18 );//will show 199118 bacause the inputYear has a value of string.
+//console.log(Number('Fab'));//will show a NaN because Fab cant be converted into a number 
+//console.log(typeof NaN);//will show number becaue NaN is a type of number 
+//console.log(String(23),23);//will show 23 23 because we converted the number into string using String function 
+//the conversion goes the same way for string to number
+//type coercion
+//console.log("I'm " + 23 + " years old");//23 is converted to string because of the + operator because of coercion
+//console.log('23' - '10' - 3); //will show 10 because  - operator does the opposite of + operator through coercion 
+//also multiplication and division does the same as the - operator
+//let n = '1' + 1 ; //will show 11 because of + operator
+//n = n - 1 ;
+//console.log(n);//will show 10
+//in jscript there is 5 falsy values : 0,'',undefined,null,NaN 
+//console.log(Boolean(0));//will show false 
+//console.log(Boolean(undefined));//will show false 
+//console.log(Boolean('Fab'));//will show true
+//console.log(Boolean({}));//will show true
+//console.log(Boolean(''));//will show false
+//const money = 0 ; 
+//const money = 50;
+//if (money){
+//console.log("Dont spend it all ");
+//} else {
+//console.log(" EWWWW ");
+//will show EWWWW because the money here indicates 0 which in boolean is a flase
+//will show The if block because 50 is a truthy value
+
