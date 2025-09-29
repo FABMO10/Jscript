@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Equality Operators Demo</title>
+</head>
+<body>
+  <h1>Equality Operators Demo</h1>
+  <pre id="out"></pre>
+
+  <script>
+    // Show console.log output on the page
+    (function(){
+      const out = document.getElementById('out');
+      const origLog = console.log.bind(console);
+      console.log = function(...args){
+        origLog(...args);
+        const line = args.map(a => (typeof a === 'object' ? JSON.stringify(a) : String(a))).join(' ');
+        out.textContent += line + '\n';
+      };
+    })();
+  </script>
+
+  <script src="./Equality_Operators.js"></script>
+</body>
+</html>
