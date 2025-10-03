@@ -1,0 +1,41 @@
+h1,h2{
+    background-color: red;
+    width:100 px;
+    height: 40px;
+}
+h3{
+    background-color: darkcyan;
+    width: 100 px;
+    height: 40 px;
+}
+
+.site-header{
+  position:relative;
+  height: 400px;                 /* choose 150–300px, or use 40vh/60vh for responsive */
+  background-image: url('thumb-1750928115800.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding:16px;
+  box-sizing:border-box;
+}
+.top-nav{ 
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  z-index: 2;
+}
+.top-nav ul{
+  display:flex;
+  gap:12px;
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+.top-nav a{
+  padding:6px 10px;
+  background: rgba(0,0,0,0.45);
+  color:#fff;
+  border-radius:6px;
+  text-decoration:none;
+}
