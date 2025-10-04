@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Registration</title>
   <style>
+    /* prevent padding from increasing element width and allow flex items to shrink */
     html,body { height:100%; margin:0; font-family: Arial, sans-serif; }
     .center-screen {
       height:100vh;
@@ -15,6 +16,7 @@
     }
     .card {
       width:320px;
+      max-width: calc(100% - 32px);
       padding:20px;
       background:#fff;
       border-radius:8px;
@@ -26,6 +28,7 @@
     .inputs { display:flex; gap:10px; margin-bottom:12px; }
     .inputs input {
       flex:1;
+      min-width:0; /* allow the input to shrink within the flex container */
       padding:8px 10px;
       border:1px solid #ddd;
       border-radius:6px;
