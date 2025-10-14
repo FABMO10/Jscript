@@ -1,11 +1,15 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Registration</title>
+
   <style>
-    /* prevent padding from increasing element width and allow flex items to shrink */
+    
+    *, *::before, *::after { box-sizing: border-box; }
+
     html,body { height:100%; margin:0; font-family: Arial, sans-serif; }
     .center-screen {
       height:100vh;
@@ -28,12 +32,14 @@
     .inputs { display:flex; gap:10px; margin-bottom:12px; }
     .inputs input {
       flex:1;
-      min-width:0; /* allow the input to shrink within the flex container */
+      min-width:0; 
       padding:8px 10px;
       border:1px solid #ddd;
       border-radius:6px;
       font-size:14px;
     }
+    
+    .stack { display:flex; flex-direction:column; gap:10px; margin-bottom:12px; }
     .btn {
       display:inline-block;
       padding:8px 14px;
@@ -49,11 +55,11 @@
 </head>
 
 <body>
-  <body>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="game.html">Game</a>
-     </nav>   
+  <nav>
+      <a href="index.html">Home</a>
+      <a href="game.html">Game</a>
+  </nav>
+
   <div class="center-screen">
     <div class="card" role="region" aria-labelledby="newUserHeading">
       <h2 id="newUserHeading">New User?</h2>
@@ -64,41 +70,50 @@
           <input id="firstName" name="firstName" type="text" placeholder="First name" required />
           <input id="lastName" name="lastName" type="text" placeholder="Last name" required />
         </div>
-        <button class="btn" type="submit">Save</button>
+
+        <div class="stack">
+          <input id="maidenName" name="maidenName" type="text" placeholder="Maiden name" />
+          <input id="password" name="password" type="password" placeholder="Password" required />
+        </div>
+
+        <button class="btn" type="submit"> Register </button>
       </form>
 
-      <!-- element where the entered values will be stored -->
+     
       <div id="new_USER" aria-hidden="true" style="display:none"></div>
 
-      <!-- optional visible confirmation for the user -->
+      
       <div id="confirmation" class="note" aria-live="polite"></div>
     </div>
   </div>
 
   <script>
-    const form = document.getElementById('regForm');
-    const first = document.getElementById('firstName');
-    const last = document.getElementById('lastName');
-    const storageEl = document.getElementById('new_USER');
-    const confirmEl = document.getElementById('confirmation');
+    const form = document.querySelector('#regForm');
+    const first = document.querySelector('#firstName');
+    const last = document.querySelector('#lastName');
+    const maiden = document.querySelector('#maidenName');
+    const pass = document.querySelector('#password');
+    const storageEl = document.querySelector('#new_USER');
+    const confirmEl = document.querySelector('#confirmation');
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const f = first.value.trim();
       const l = last.value.trim();
+      const m = maiden.value.trim();
+      const p = pass.value; 
+
       if (!f && !l) return;
 
-      // store as JSON string inside the element with id "new_USER"
-      const obj = { firstName: f, lastName: l };
+      
+      const obj = { firstName: f, lastName: l, maidenName: m, password: p };
       storageEl.textContent = JSON.stringify(obj);
+      confirmEl.textContent = `Saved: ${f} ${l}${m ? ' (maiden: ' + m + ')' : ''}`;
 
-      // show a short confirmation to the user
-      confirmEl.textContent = `Saved: ${f} ${l}`;
-
-      // clear inputs if desired:
-      // first.value = '';
-      // last.value = '';
+      
+      pass.value = '';
     });
   </script>
+  <script src="../registration.js"></script>
 </body>
 </html>
