@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,14 +49,38 @@
       cursor:pointer;
       font-weight:600;
     }
+    .top-nav {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  z-index: 2;
+}
+.top-nav ul {
+  display: flex;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.top-nav a {
+  padding: 6px 10px;
+  background: rgba(0,0,0,0.45);
+  color: #fff;
+  border-radius: 6px;
+  text-decoration: none;
+}
     .note { margin-top:10px; font-size:13px; color:#333; word-break:break-word; }
   </style>
 </head>
 
 <body>
-  <nav>
-      <a href="index.html">Home</a>
-      <a href="game.html">Game</a>
+  <nav class="top-nav" aria-label="Main">
+    <ul>
+      <li><a href="index.html">About</a></li>
+      <li><a href="login.html">Start Game</a></li>
+      <li><a href="ranking.html">Ranking</a></li>
+      <li><a href="registration.html">Registration</a></li>
+    </ul>
   </nav>
 
   <div class="center-screen">
@@ -86,34 +109,6 @@
       <div id="confirmation" class="note" aria-live="polite"></div>
     </div>
   </div>
-
-  <script>
-    const form = document.querySelector('#regForm');
-    const first = document.querySelector('#firstName');
-    const last = document.querySelector('#lastName');
-    const maiden = document.querySelector('#maidenName');
-    const pass = document.querySelector('#password');
-    const storageEl = document.querySelector('#new_USER');
-    const confirmEl = document.querySelector('#confirmation');
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const f = first.value.trim();
-      const l = last.value.trim();
-      const m = maiden.value.trim();
-      const p = pass.value; 
-
-      if (!f && !l) return;
-
-      
-      const obj = { firstName: f, lastName: l, maidenName: m, password: p };
-      storageEl.textContent = JSON.stringify(obj);
-      confirmEl.textContent = `Saved: ${f} ${l}${m ? ' (maiden: ' + m + ')' : ''}`;
-
-      
-      pass.value = '';
-    });
-  </script>
-  <script src="../registration.js"></script>
+  <script src="../Registration/registration.js"></script>
 </body>
 </html>

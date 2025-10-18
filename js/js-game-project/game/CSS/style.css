@@ -11,8 +11,8 @@ h3 {
 
 .site-header {
   position: relative;
-  height: 400px;
-  background-image: url('thumb-1750928115800.png');
+  height: 500px;
+  background-image: url('dice.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -54,7 +54,7 @@ h3 {
   pointer-events: auto;
   margin: 0;
   padding: 10px 18px;
-  background: #620909;
+  background: #094062;
   color: #fff;
   font-size: 1.6rem;
   border-radius: 6px;

@@ -1,53 +1,93 @@
-// ...existing code...
-function register() {
-  const form = document.getElementById('regForm');
-  if (!form) return;
+class Registration {
+  constructor({
+    formId = 'regForm',
+    firstId = 'firstName',
+    lastId = 'lastName',
+    maidenId = 'maidenName',
+    passId = 'password',
+    outUserId = 'new_USER',
+    confirmId = 'confirmation',
+    storageKey = 'users'
+  } = {}) {
+    this.form = document.getElementById(formId);
+    if (!this.form) return;
 
-  const first = document.getElementById('firstName');
-  const last = document.getElementById('lastName');
-  const maiden = document.getElementById('maidenName');
-  const pass = document.getElementById('password');
-  const storageEl = document.getElementById('new_USER');
-  const confirmEl = document.getElementById('confirmation');
+    // inputs / outputs
+    this.first = document.getElementById(firstId);
+    this.last  = document.getElementById(lastId);
+    this.maiden= document.getElementById(maidenId);
+    this.pass  = document.getElementById(passId);
+    this.out   = document.getElementById(outUserId);
+    this.msg   = document.getElementById(confirmId);
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
+    // storage
+    this.storageKey = storageKey;
+    if (localStorage.getItem(this.storageKey) === null) {
+  localStorage.setItem(this.storageKey, '[]');
+}
 
-    const f = first?.value.trim() || '';
-    const l = last?.value.trim() || '';
-    const m = maiden?.value.trim() || '';
-    const p = pass?.value || '';
+    // events
+    this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+  }
 
-     const username = (f + ' ' + l).trim();
+  loadUsers() {
+    // safe because we seeded above
+    return JSON.parse(localStorage.getItem(this.storageKey) || '[]');
+  }
 
-    // if username or password is empty -> output "missing"
-    if (username === '' || p === '') {
-      if (confirmEl) confirmEl.textContent = 'missing username or password';
-      return;
-    }
+  saveUsers(arr) {
+    localStorage.setItem(this.storageKey, JSON.stringify(arr));
+  }
 
-    const user = {
+  buildUser(f, l, m, p) {
+    const username = (f + ' ' + l).trim();
+    return {
+      id: (crypto.randomUUID && crypto.randomUUID()) || String(Date.now()),
+      username,
+      password: p,     // plaintext for demo/offline only
       firstName: f,
       lastName: l,
       maidenName: m,
       created: new Date().toISOString()
     };
+  }
 
-    // Save each user under a numeric key to avoid JSON.parse and try/catch
-    const rawCount = localStorage.getItem('users_count');
-    const currentCount = rawCount !== null && rawCount !== '' ? Number(rawCount) : 0;
-    const safeCount = Number.isFinite(currentCount) && !Number.isNaN(currentCount) ? currentCount : 0;
-    const nextIndex = safeCount + 1;
+  handleSubmit(e) {
+    e.preventDefault();
 
-    localStorage.setItem('user_' + nextIndex, JSON.stringify(user));
-    localStorage.setItem('users_count', String(nextIndex));
+    const f = this.first?.value.trim()  || '';
+    const l = this.last?.value.trim()   || '';
+    const m = this.maiden?.value.trim() || '';
+    const p = this.pass?.value || '';
 
-    if (storageEl) storageEl.textContent = JSON.stringify(user);
-    if (confirmEl) confirmEl.textContent = `Saved: ${f} ${l}${m ? ' (maiden: ' + m + ')' : ''}`;
+    const username = (f + ' ' + l).trim();
+    if (!username || !p) {
+      this.setMsg('Missing username or password.');
+      return;
+    }
 
-   
-    if (pass) pass.value = '';
-  });
+    const users = this.loadUsers();
+
+    // OPTIONAL: prevent duplicates (case-insensitive)
+    if (users.some(u => (u.username || '').toLowerCase() === username.toLowerCase())) {
+      this.setMsg('That username already exists.');
+      return;
+    }
+
+    const newUser = this.buildUser(f, l, m, p);
+    users.push(newUser);
+    this.saveUsers(users);
+
+    if (this.out) this.out.textContent = JSON.stringify(newUser, null, 2);
+    this.setMsg(`Saved ${username}`);
+    this.form.reset?.();
+  }
+
+  setMsg(text) {
+    if (this.msg) this.msg.textContent = text;
+  }
 }
 
-document.addEventListener('DOMContentLoaded', register);
+document.addEventListener('DOMContentLoaded', () => {
+  new Registration(); // uses default element IDs
+});
