@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Leaderboard</title>
+  <style>
+    :root { --bg:#0f172a; --card:#111827; --muted:#94a3b8; --fg:#e5e7eb; --accent:#22c55e; }
+    *{box-sizing:border-box} html,body{height:100%;margin:0;font-family:system-ui,Arial}
+    body{background:linear-gradient(180deg,#0b1220,#0f172a); color:var(--fg); }
+    .wrap{min-height:100%;display:grid;place-items:center;padding:24px}
+    .card{width:min(720px,96vw);background:#111827;border-radius:16px;padding:24px 20px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+    h1{margin:0 0 10px;font-size:22px}
+    p.muted{color:var(--muted);margin:0 0 16px}
+    table{width:100%;border-collapse:collapse;margin-top:8px;font-size:14px}
+    thead th{ text-align:left; color:#cbd5e1; border-bottom:1px solid #253047; padding:10px 8px }
+    tbody td{ border-bottom:1px dashed #1f2937; padding:10px 8px }
+    tbody tr:hover{ background:#0f172a }
+    .rank{ width:56px; text-align:center; font-weight:700 }
+    .name{ font-weight:600 }
+    .score{ font-variant-numeric: tabular-nums; }
+    .top-nav { position: absolute; right: 16px; top: 16px; z-index: 2; }
+    .top-nav ul { display:flex; gap:12px; margin:0; padding:0; list-style:none; }
+    .top-nav a { padding:6px 10px; background: rgba(0,0,0,0.45); color:#fff; border-radius:6px; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <nav class="top-nav" aria-label="Main">
+    <ul>
+      <li><a href="../Index/index.html">About</a></li>
+      <li><a href="../Login/login.html">Start Game</a></li>
+      <li><a href="../Ranking/ranking.html">Ranking</a></li>
+      <li><a href="../Registration/registration.html">Registration</a></li>
+    </ul>
+  </nav>
+
+  <div class="wrap">
+    <div class="card">
+      <h1>Leaderboard</h1>
+      <p class="muted">Top scorers first. Stored in your browser’s localStorage.</p>
+
+      <div id="summary" class="muted"></div>
+
+      <table aria-label="Leaderboard">
+        <thead>
+          <tr>
+            <th class="rank">#</th>
+            <th>Name</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody id="rankingBody"><!-- rows injected by JS --></tbody>
+      </table>
+    </div>
+  </div>
+  </body>
+  </html>

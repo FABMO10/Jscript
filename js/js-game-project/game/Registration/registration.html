@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registration</title>
+  <link rel="stylesheet" href="../Registration/registration.css" />
+</head>
+
+<body>
+  <nav class="top-nav" aria-label="Main">
+    <ul>
+      <li><a href="../Index/index.html">About</a></li>
+      <li><a href="../Login/login.html">Start Game</a></li>
+      <li><a href="../Ranking/ranking.html">Ranking</a></li>
+      <li><a href="../Registration/registration.html">Registration</a></li>
+    </ul>
+  </nav>
+
+  <div class="center-screen">
+    <div class="card" role="region" aria-labelledby="newUserHeading">
+      <h2 id="newUserHeading">New User?</h2>
+      <p>Register here</p>
+
+      <form id="regForm">
+        <div class="inputs">
+          <input id="firstName" name="firstName" type="text" placeholder="First name" required />
+          <input id="lastName" name="lastName" type="text" placeholder="Last name" required />
+        </div>
+
+        <div class="stack">
+          <input id="maidenName" name="maidenName" type="text" placeholder="Maiden name" />
+          <input id="password" name="password" type="password" placeholder="Password" required />
+        </div>
+
+        <button class="btn" type="submit"> Register </button>
+      </form>
+
+     
+      <div id="new_USER" aria-hidden="true" style="display:none"></div>
+
+      
+      <div id="confirmation" class="note" aria-live="polite"></div>
+    </div>
+  </div>
+  <script src="../Registration/registration.js"></script>
+</body>
+</html>

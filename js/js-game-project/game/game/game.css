@@ -1,0 +1,31 @@
+:root { --bg:#0f172a; --card:#111827; --muted:#94a3b8; --fg:#e5e7eb; --accent:#22c55e; --danger:#ef4444; }
+    *{box-sizing:border-box} html,body{height:100%;margin:0;font-family:system-ui,Arial}
+    body{background:linear-gradient(180deg,#0b1220,#0f172a)}
+    .wrap{min-height:100%;display:grid;place-items:center;padding:24px}
+    .card{width:min(720px,96vw);background:var(--card);color:var(--fg);border-radius:16px;padding:24px 20px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+    .row{display:flex;gap:16px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+    h1{margin:0 0 6px;font-size:22px}
+    .muted{color:var(--muted);font-size:14px}
+
+    .dice-wrap{display:flex;gap:20px;justify-content:center;margin:22px 0}
+    .die{width:96px;height:96px;border-radius:16px;background:#fff;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);padding:10px;box-shadow:inset 0 0 0 2px #e5e7eb, 0 12px 30px rgba(0,0,0,.25)}
+    .pip{width:14px;height:14px;border-radius:50%;background:#0f172a;place-self:center}
+    .hidden{visibility:hidden}
+
+    /* roll animation */
+    .rolling{animation: wobble .7s ease-in-out}
+    @keyframes wobble{
+      0%{transform:translateY(0) rotate(0)}
+      25%{transform:translateY(-8px) rotate(8deg)}
+      50%{transform:translateY(0) rotate(-6deg)}
+      75%{transform:translateY(-5px) rotate(4deg)}
+      100%{transform:translateY(0) rotate(0)}
+    }
+
+    .btn{padding:10px 18px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
+    .btn-roll{background:#2563eb;color:#fff}
+    .btn:disabled{opacity:.6;cursor:not-allowed}
+    .stats{display:flex;gap:16px;flex-wrap:wrap}
+    .pill{padding:6px 10px;border-radius:999px;background:#0b1220;color:#cbd5e1;border:1px solid #28344a}
+    .result{margin-top:10px;font-weight:700}
+    .ok{color:var(--accent)} .bad{color:var(--danger)}
