@@ -11,16 +11,57 @@ const loadUsers = () => JSON.parse(localStorage.getItem(USERS_KEY) || '[]');
 const saveUsers = (arr) => localStorage.setItem(USERS_KEY, JSON.stringify(arr));
 const getCurrentUser = () => JSON.parse(localStorage.getItem(CURRENT_USER_KEY) || 'null');
 
+// ★ NEW: ensure current user exists in users[] and return their record
+function ensureCurrentUserInUsers(defaultCash = 100) {
+  const me = getCurrentUser();
+  if (!me) return null;
+
+  const users = loadUsers();
+  let idx = users.findIndex(u => u.id === me.id);
+
+  const name =
+    (me.username && String(me.username).trim()) ||
+    [me.firstName || '', me.lastName || ''].join(' ').trim() ||
+    'Player';
+
+  if (idx < 0) {
+    const record = { id: me.id, username: name, cash: Number(defaultCash) };
+    users.push(record);
+    saveUsers(users);
+    return record;
+  }
+
+  const existing = users[idx];
+  if (!Number.isFinite(Number(existing.cash))) {
+    existing.cash = Number(defaultCash);
+    saveUsers(users);
+  }
+  return existing;
+}
+
 // Persist helpers
+// ★ CHANGED: create-or-update (upsert) the user’s cash
 function persistCashToUser(newCash) {
   const me = getCurrentUser();
   if (!me) return;
+
   const users = loadUsers();
-  const idx = users.findIndex(u => u.id === me.id);
+  let idx = users.findIndex(u => u.id === me.id);
+
+  const name =
+    (me.username && String(me.username).trim()) ||
+    [me.firstName || '', me.lastName || ''].join(' ').trim() ||
+    'Player';
+
+  const amount = Number(newCash);
+
   if (idx >= 0) {
-    users[idx].cash = Number(newCash);
-    saveUsers(users);
+    users[idx].cash = amount;
+  } else {
+    users.push({ id: me.id, username: name, cash: amount });
   }
+
+  saveUsers(users);
 }
 
 function updateTopWinsIfNeeded(winsNow) {
@@ -169,8 +210,12 @@ document.addEventListener('DOMContentLoaded', () => {
   setDieFace(die1El, 1);
   setDieFace(die2El, 1);
 
+  // ★ CHANGED: ensure user exists and start from stored cash (not hardcoded 100)
+  const record = ensureCurrentUserInUsers(100);
+  const startCash = record ? Number(record.cash) : 100;
+
   // Game state
-  const game = new CrapsGame({ initialCash: 100, bet: 50 });
+  const game = new CrapsGame({ initialCash: startCash, bet: 50 });
 
   // Optional: greet logged-in user + show stored topScore
   const me = getCurrentUser();
