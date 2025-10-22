@@ -1,40 +1,40 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Ranking — Cash Only</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    body { font-family: system-ui, sans-serif; margin: 0; padding: 24px; background:#0f1115; color:#e8eaf0; }
-    h1 { margin: 0 0 16px; font-size: 20px; color:#cfd6e6; }
-    .card { background:#171a21; border:1px solid #252a34; border-radius:12px; max-width: 720px; margin:auto; overflow:hidden; }
-    .card header { padding: 14px 16px; border-bottom:1px solid #252a34; }
-    .meta { padding:10px 16px; color:#a7adbb; font-size: 13px; }
-    table { width:100%; border-collapse: collapse; }
-    thead th { text-align:left; font-weight:600; color:#b8c0cf; padding:12px 14px; font-size:13px; border-bottom:1px solid #252a34; }
-    tbody td { padding:12px 14px; border-bottom:1px solid #252a34; font-size:14px; }
-    tbody tr:hover { background: rgba(255,255,255,.04); }
-    .rank { width:70px; color:#8ea5ff; font-weight:700; }
-    .cash { text-align:right; font-variant-numeric: tabular-nums; }
-    .empty { padding: 16px; color:#a7adbb; }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leaderboard — Craps Dice Game</title>
+ <link rel="stylesheet"href="../Ranking/ranking.css"/>
 </head>
 <body>
-  <div class="card">
-    <header>
-      <h1>Cash Leaderboard</h1>
-    </header>
-    <div class="meta">
-      Showing players stored by the game (cash is the only score).
-      <span id="playerCount" style="float:right">0 players</span>
-    </div>
-    <table aria-label="Cash leaderboard">
-      <thead>
-        <tr><th class="rank">Rank</th><th>Username</th><th class="cash">Cash</th></tr>
-      </thead>
-      <tbody id="leaderboard-body"></tbody>
-    </table>
-    <div id="leaderboard-empty" class="empty" style="display:none">No players yet.</div>
-  </div>
+  <header>
+    <h1>🏆 Player Ranking</h1>
+  </header>
+
+  <main>
+    <section class="controls">
+      <input type="number" id="NewScore" placeholder="Enter score" />
+      <button id="updateBtn">Update Score</button>
+    </section>
+
+    <section id="RankingTable"></section>
+  </main>
+
+  <script type="module">
+    import { RankingSystem } from './ranking.js';
+
+    const ranking = new RankingSystem();
+
+    // Uncomment for quick demo data (useful for first load)
+    ranking.seedDemoUsers();
+
+    // Render the leaderboard on load
+    ranking.renderLeaderboard();
+
+    // Update score when the button is clicked
+    document.getElementById('updateBtn').addEventListener('click', () => {
+      ranking.updateScore();
+    });
+  </script>
 </body>
 </html>

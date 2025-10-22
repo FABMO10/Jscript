@@ -1,91 +1,140 @@
-const USERS_KEY = 'users';
+// ranking.js — modern version using class + modules (no try/catch)
 
-    // Ensure the key exists so JSON.parse is safe if your game hasn't run yet
-    if (!localStorage.getItem(USERS_KEY)) {
-      localStorage.setItem(USERS_KEY, '[]');
+export class RankingSystem {
+  constructor(storage = localStorage, session = sessionStorage) {
+    this.storage = storage;
+    this.session = session;
+  }
+
+  // ---------- Storage Helpers ----------
+
+  getCurrentEmail() {
+    const email = this.session.getItem('loggedInUser');
+    if (email && email !== 'undefined' && email !== 'null' && email !== '') {
+      return email;
     }
-
-    // Load users (expects valid JSON written by the game)
-    function loadUsers() {
-      const raw = localStorage.getItem(USERS_KEY) || '[]';
-      const arr = JSON.parse(raw);              // no try/catch per your request
-      return Array.isArray(arr) ? arr : [];
+    const cu = this.storage.getItem('currentUser');
+    if (cu) {
+      const parsed = JSON.parse(cu);
+      if (parsed && parsed.email) return parsed.email;
     }
+    return null;
+  }
 
-    // Prefer username; fall back to "firstName lastName" if present
-    function nameOf(u) {
-      const uname = (u && u.username) ? String(u.username).trim() : '';
-      if (uname) return uname;
-      const first = (u && u.firstName) ? String(u.firstName).trim() : '';
-      const last  = (u && u.lastName)  ? String(u.lastName).trim()  : '';
-      const combo = (first + ' ' + last).trim();
-      return combo || 'Player';
-    }
+  loadUser(email) {
+    const data = this.storage.getItem(email);
+    return data ? JSON.parse(data) : null;
+  }
 
-    // Map to {username, cash} and sort by cash desc, then name asc
-    function getRanked() {
-      const cleaned = loadUsers()
-        .map(u => ({ username: nameOf(u), cash: Number(u && u.cash) }))
-        .filter(u => u.username && Number.isFinite(u.cash));
+  saveUser(user) {
+    if (!user || !user.email) return;
+    this.storage.setItem(user.email, JSON.stringify(user));
+  }
 
-      const sorted = cleaned.sort((a, b) => (b.cash - a.cash) || a.username.localeCompare(b.username));
-
-      // competition ranking: 1,2,2,4...
-      let lastCash = null, lastRank = 0;
-      return sorted.map((u, i) => {
-        if (u.cash !== lastCash) { lastRank = i + 1; lastCash = u.cash; }
-        return { ...u, rank: lastRank };
-      });
-    }
-
-    const currencyFmt = new Intl.NumberFormat(navigator.language || 'en-US', {
-      style: 'currency', currency: 'USD', maximumFractionDigits: 0
-    });
-
-    function render() {
-      const tbody = document.getElementById('leaderboard-body');
-      const empty = document.getElementById('leaderboard-empty');
-      const count = document.getElementById('playerCount');
-      if (!tbody) return;
-
-      const ranked = getRanked();
-
-      tbody.innerHTML = '';
-      const frag = document.createDocumentFragment();
-
-      for (let i = 0; i < ranked.length; i++) {
-        const u = ranked[i];
-        const tr = document.createElement('tr');
-
-        const tdRank = document.createElement('td');
-        tdRank.className = 'rank';
-        tdRank.textContent = u.rank;
-
-        const tdName = document.createElement('td');
-        tdName.textContent = u.username;
-
-        const tdCash = document.createElement('td');
-        tdCash.className = 'cash';
-        tdCash.textContent = currencyFmt.format(u.cash);
-
-        tr.append(tdRank, tdName, tdCash);
-        frag.appendChild(tr);
+  loadAllUsers() {
+    const users = [];
+    const keys = Object.keys(this.storage);
+    for (const key of keys) {
+      if (key === 'currentUser') continue;
+      const data = this.storage.getItem(key);
+      if (data) {
+        const obj = JSON.parse(data);
+        if (obj && obj.email) {
+          obj.topScore = Number(obj.topScore) || 0;
+          users.push(obj);
+        }
       }
-
-      tbody.appendChild(frag);
-      empty.style.display = ranked.length ? 'none' : 'block';
-      count.textContent = `${ranked.length} ${ranked.length === 1 ? 'player' : 'players'}`;
     }
+    return users;
+  }
 
-    // Re-render when users change (this tab or other tabs)
-    const _setItem = localStorage.setItem;
-    localStorage.setItem = function(k, v) {
-      _setItem.apply(this, arguments);
-      if (k === USERS_KEY) render();
-    };
-    window.addEventListener('storage', (e) => {
-      if (e.key === USERS_KEY) render();
+  // ---------- Leaderboard Logic ----------
+
+  getLeaderboard() {
+    const users = this.loadAllUsers();
+    const leaderboard = users.map(u => ({
+      username: u.username || u.name || u.email,
+      email: u.email,
+      topScore: Number(u.topScore) || 0
+    }));
+    // sort highest → lowest
+    leaderboard.sort((a, b) => b.topScore - a.topScore);
+    return leaderboard;
+  }
+
+  renderLeaderboard(containerId = 'RankingTable') {
+    const el = document.getElementById(containerId);
+    if (!el) return;
+
+    const leaderboard = this.getLeaderboard();
+
+    let html = `
+      <div style="max-width:600px;margin:16px auto;">
+        <div style="display:flex;justify-content:space-between;
+                    padding:10px 12px;font-weight:700;border-bottom:1px solid #ddd;">
+          <span>Name</span><span>Top Score</span>
+        </div>
+    `;
+
+    leaderboard.forEach((entry, i) => {
+      const highlight = i === 0 ? 'background:#fffbe6;' : '';
+      html += `
+        <div style="display:flex;justify-content:space-between;
+                    padding:10px 12px;border-bottom:1px solid #eee;${highlight}">
+          <span title="${entry.email}">${entry.username}</span>
+          <span>${entry.topScore}</span>
+        </div>
+      `;
     });
 
-    document.addEventListener('DOMContentLoaded', render);
- 
+    html += `</div>`;
+    el.innerHTML = html;
+
+    console.clear();
+    console.log('Leaderboard (JSON):');
+    console.log(JSON.stringify(leaderboard, null, 2));
+    console.table(leaderboard);
+  }
+
+  // ---------- Updating Score ----------
+
+  updateScore(inputId = 'NewScore') {
+    const el = document.getElementById(inputId);
+    if (!el) return;
+
+    const newScore = Number(el.value);
+    if (!Number.isFinite(newScore)) {
+      alert('Please enter a valid number for score.');
+      return;
+    }
+
+    const email = this.getCurrentEmail();
+    if (!email) {
+      alert('No logged-in user found.');
+      return;
+    }
+
+    let user = this.loadUser(email);
+    if (!user) {
+      user = { email, username: email, topScore: 0 };
+    }
+
+    if (newScore > (user.topScore || 0)) {
+      user.topScore = newScore;
+      this.saveUser(user);
+    }
+
+    this.renderLeaderboard();
+  }
+
+  // ---------- Demo Seeding ----------
+
+  seedDemoUsers() {
+    const demo = [
+      { email: 'alice@example.com', username: 'Alice', topScore: 42 },
+      { email: 'bob@example.com', username: 'Bob', topScore: 17 },
+      { email: 'zoe@example.com', username: 'Zoe', topScore: 63 },
+    ];
+    demo.forEach(u => this.saveUser(u));
+  }
+}
