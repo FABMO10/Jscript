@@ -1,30 +1,52 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Game website</title>
-  <link rel="stylesheet" href="../Index/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Craps Game</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="brand">
+        <h1>WELCOME TO CRAPS!</h1>
+      </div>
+      <nav class="top-nav">
+        <ul>
+          <li><a href="index.html">ABOUT</a></li>
+          <li><a href="javascript:void(0)" id="startBtn">START GAME</a></li>
+          <li><a href="../Ranking/ranking.html">RANKING</a></li>
+          <li><a href="../Registration/registration.html">REGISTER</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main class="card center-screen">
+      <form id="logForm">
+        <div class="inputs">
+          <h2>LOGIN TO START GAME</h2>
+          <input
+            id="username"
+            name="user"
+            type="text"
+            placeholder="Username"
+            required
+          />
+          <input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Password"
+            required
+          />
+        </div>
+        <button class="btn" id="loginBtn" type="submit">LOGIN</button>
+        <div id="message" hidden>
+          Please enter your username and password to start the game.
+        </div>
+        <div id="confirmation" class="note"></div>
+      </form>
 
-</head>
-    <body>  
-        <header class="site-header">
-  <div class="brand">
-        <h1>CRAPS!</h1>
-  </div>
-  <nav class="top-nav" aria-label="Main">
-    <ul>
-      <li><a href="../Index/index.html">About</a></li>
-      <li><a href="../Login/login.html">Start Game</a></li>
-      <li><a href="../Ranking/ranking.html">Ranking</a></li>
-      <li><a href="../Registration/registration.html">Registration</a></li>
-    </ul>
-  </nav>
-</header>
-<main>
-    <h2>Welcome to the Ultimate Craps Game!</h2>
-    <p>Experience the thrill of the casino from the comfort of your home. Roll the dice and test your luck!</p>
-</main>
-</body>
+      <script src="script.js"></script>
+    </main>
+  </body>
 </html>
-        

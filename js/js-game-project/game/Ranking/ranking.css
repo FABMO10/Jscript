@@ -1,87 +1,82 @@
- 
-    body {
-      font-family: system-ui, Arial, sans-serif;
-      background: #f7f8fa;
-      margin: 0;
-      padding: 0;
-    }
+body {
+  background: url("../Images/Dice.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: Arial, Helvetica, sans-serif;
+}
 
-    header {
-      background: #222;
-      color: #fff;
-      padding: 16px;
-      text-align: center;
-    }
+.top-nav {
+  position: absolute;
+  right: 20px;
+  top: 40px;
+  z-index: 2;
+}
 
-    main {
-      max-width: 700px;
-      margin: 40px auto;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-      overflow: hidden;
-    }
+.top-nav ul {
+  display: flex;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
 
-    section.controls {
-      padding: 16px;
-      text-align: center;
-      border-bottom: 1px solid #eee;
-    }
+.top-nav a {
+  padding: 6px 10px;
+  background: rgba(0, 0, 0, 0.45);
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+}
 
-    section.controls input {
-      padding: 8px 10px;
-      font-size: 1rem;
-      width: 120px;
-      margin-right: 8px;
-    }
+.wrap {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 173px;
+}
 
-    section.controls button {
-      padding: 8px 16px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 6px;
-      background: #3b82f6;
-      color: white;
-      cursor: pointer;
-      transition: 0.2s;
-    }
+.card {
+  width: min(720px, 96vw);
+  background: #f5f7fb;
+  border-radius: 16px;
+  padding: 24px 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
 
-    section.controls button:hover {
-      background: #2563eb;
-    }
+h1 {
+  margin: 0 0 10px;
+  font-size: 22px;
+}
 
-    #RankingTable {
-      padding: 0;
-    }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+  font-size: 14px;
+}
 
-    .rank-header,
-    .rank-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 12px 20px;
-    }
+thead th {
+  text-align: left;
+  color: #35373a;
+  border-bottom: 1px solid #253047;
+  padding: 10px 8px;
+}
 
-    .rank-header {
-      font-weight: bold;
-      border-bottom: 2px solid #ddd;
-      background: #f0f0f0;
-    }
+tbody td {
+  border-bottom: 1px dashed #3d4a5c;
+  padding: 10px 8px;
+}
 
-    .rank-row {
-      border-bottom: 1px solid #eee;
-    }
+.rank {
+  width: 56px;
+  text-align: center;
+  font-weight: 700;
+}
 
-    .rank-row:first-of-type {
-      background: #fffbe6;
-      font-weight: bold;
-    }
+.name {
+  font-weight: 600;
+}
 
-    .rank-row span:first-child {
-      text-align: left;
-    }
-
-    .rank-row span:last-child {
-      text-align: right;
-      min-width: 60px;
-    }
-  
+.score {
+  font-variant-numeric: tabular-nums;
+}

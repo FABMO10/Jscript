@@ -1,93 +1,90 @@
-class Registration {
-  constructor({
-    formId = 'regForm',
-    firstId = 'firstName',
-    lastId = 'lastName',
-    maidenId = 'maidenName',
-    passId = 'password',
-    outUserId = 'new_USER',
-    confirmId = 'confirmation',
-    storageKey = 'users'
-  } = {}) {
-    this.form = document.getElementById(formId);
-    if (!this.form) return;
+const USERS_KEY = 'users';
+if (localStorage.getItem(USERS_KEY) === null) {
+    localStorage.setItem(USERS_KEY, '[]'); // seed so JSON.parse is safe
+}
+const loadUsers = () => JSON.parse(localStorage.getItem(USERS_KEY) || '[]');
+const saveUsers = (arr) => localStorage.setItem(USERS_KEY, JSON.stringify(arr));
 
-    // inputs / outputs
-    this.first = document.getElementById(firstId);
-    this.last  = document.getElementById(lastId);
-    this.maiden= document.getElementById(maidenId);
-    this.pass  = document.getElementById(passId);
-    this.out   = document.getElementById(outUserId);
-    this.msg   = document.getElementById(confirmId);
+// ---- Helpers ----
+const getId = () =>
+    (window.crypto && window.crypto.randomUUID)
+        ? window.crypto.randomUUID()
+        : (Date.now() + Math.random().toString(16).slice(2));
 
-    // storage
-    this.storageKey = storageKey;
-    if (localStorage.getItem(this.storageKey) === null) {
-  localStorage.setItem(this.storageKey, '[]');
+// 1) Duplicate-username check (case-insensitive, trims)
+function isUsernameTaken(users, candidate) {
+    const norm = String(candidate || '').trim().toLowerCase();
+    if (!norm) return false;
+    return users.some(u => String(u?.username || '').trim().toLowerCase() === norm);
 }
 
-    // events
-    this.form.addEventListener('submit', (e) => this.handleSubmit(e));
-  }
+// 2) Password validator: 6–12 chars, A–Z, a–z, digit, symbol, no spaces
+function buildPasswordRegex() {
+    const parts = [];
 
-  loadUsers() {
-    // safe because we seeded above
-    return JSON.parse(localStorage.getItem(this.storageKey) || '[]');
-  }
+    // length + classes
+    parts.push('(?=.{6,12}$)');       // length
+    parts.push('(?=.*[A-Z])');          // uppercase
+    parts.push('(?=.*[a-z])');          // lowercase
+    parts.push('(?=.*\\d)');            // digit
+    parts.push('(?=.*[^A-Za-z0-9])');   // symbol
+    parts.push('(?!.*\\s)');            // no whitespace
 
-  saveUsers(arr) {
-    localStorage.setItem(this.storageKey, JSON.stringify(arr));
-  }
+    return new RegExp('^' + parts.join('') + '.*$', 'i');
+}
 
-  buildUser(f, l, m, p) {
-    const username = (f + ' ' + l).trim();
-    return {
-      id: (crypto.randomUUID && crypto.randomUUID()) || String(Date.now()),
-      username,
-      password: p,     // plaintext for demo/offline only
-      firstName: f,
-      lastName: l,
-      maidenName: m,
-      created: new Date().toISOString()
-    };
-  }
+const rx = buildPasswordRegex();
+function isPasswordValid(password) {
+    return rx.test(String(password));
+}
+function passwordRuleText() {
+    return 'Password must be 6–12 chars, include uppercase, lowercase, a digit, a symbol, and have no spaces.';
+}
 
-  handleSubmit(e) {
+function toTitleCase(str) {
+    return str.replace(/\w\S*/g, text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase());
+}
+
+// Getting the inputs
+document.getElementById('regForm')?.addEventListener('submit', (e) => {
     e.preventDefault();
+    const firstName = toTitleCase(document.getElementById('firstName')?.value.trim() || ''.toTitleCase());
+    const lastName = toTitleCase(document.getElementById('lastName')?.value.trim() || '');
+    const userName = toTitleCase(document.getElementById('userName')?.value.trim() || '');
+    const password = toTitleCase(document.getElementById('password')?.value || '');
+    const msgEl = document.getElementById('confirmation');
 
-    const f = this.first?.value.trim()  || '';
-    const l = this.last?.value.trim()   || '';
-    const m = this.maiden?.value.trim() || '';
-    const p = this.pass?.value || '';
+    const users = loadUsers();
 
-    const username = (f + ' ' + l).trim();
-    if (!username || !p) {
-      this.setMsg('Missing username or password.');
-      return;
+    if (isUsernameTaken(users, userName)) {
+        msgEl.textContent = 'That username already exists.';
+        return;
+    }
+    if (!isPasswordValid(password)) {
+        msgEl.textContent = passwordRuleText();
+        return;
     }
 
-    const users = this.loadUsers();
+    const user = {
+        id: getId(),
+        username: userName,
+        firstName,
+        lastName,
+        password,
+        created: new Date().toISOString()
+    };
 
-    // OPTIONAL: prevent duplicates (case-insensitive)
-    if (users.some(u => (u.username || '').toLowerCase() === username.toLowerCase())) {
-      this.setMsg('That username already exists.');
-      return;
+    users.push(user);
+    saveUsers(users);
+
+    const userElement = document.getElementById('new_USER');
+    if (userElement) {
+        userElement.textContent = JSON.stringify(user, null, 2);
     }
+    msgEl.textContent = `Saved ${userName}`;
+    e.target.reset();
 
-    const newUser = this.buildUser(f, l, m, p);
-    users.push(newUser);
-    this.saveUsers(users);
-
-    if (this.out) this.out.textContent = JSON.stringify(newUser, null, 2);
-    this.setMsg(`Saved ${username}`);
-    this.form.reset?.();
-  }
-
-  setMsg(text) {
-    if (this.msg) this.msg.textContent = text;
-  }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  new Registration(); // uses default element IDs
+    setTimeout(function () {
+        window.location.href = "../Index/index.html"
+    }, 2000);
 });

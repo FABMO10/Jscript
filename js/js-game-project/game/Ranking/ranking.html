@@ -1,40 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Leaderboard — Craps Dice Game</title>
- <link rel="stylesheet"href="../Ranking/ranking.css"/>
-</head>
-<body>
-  <header>
-    <h1>🏆 Player Ranking</h1>
-  </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leaderboard</title>
+    <link rel="stylesheet" href="ranking.css" />
+  </head>
+  <body>
+    <header>
+      <nav class="top-nav" aria-label="Main">
+        <ul>
+          <li><a href="../Index/index.html">ABOUT</a></li>
+          <li><a href="../Index/index.html">START GAME</a></li>
+          <li><a href="ranking.html">RANKING</a></li>
+          <li><a href="../Registration/registration.html">REGISTRATION</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <div class="wrap">
+        <div class="card">
+          <h1>Leaderboard</h1>
 
-  <main>
-    <section class="controls">
-      <input type="number" id="NewScore" placeholder="Enter score" />
-      <button id="updateBtn">Update Score</button>
-    </section>
+          <table>
+            <thead>
+              <tr>
+                <th class="rank">#</th>
+                <th>Name</th>
+                <th>Score</th>
+              </tr>
+            </thead>
 
-    <section id="RankingTable"></section>
-  </main>
-
-  <script type="module">
-    import { RankingSystem } from './ranking.js';
-
-    const ranking = new RankingSystem();
-
-    // Uncomment for quick demo data (useful for first load)
-    ranking.seedDemoUsers();
-
-    // Render the leaderboard on load
-    ranking.renderLeaderboard();
-
-    // Update score when the button is clicked
-    document.getElementById('updateBtn').addEventListener('click', () => {
-      ranking.updateScore();
-    });
-  </script>
-</body>
+            <tbody id="rankingBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+    <script src="ranking.js"></script>
+  </body>
 </html>
