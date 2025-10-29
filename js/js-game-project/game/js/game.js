@@ -97,7 +97,7 @@ function setupExitButton(game, exitBtnId = 'exitBtn') {
         else board[idx].score = Math.max(Number(board[idx].score || 0), currentScore);
 
         saveBoard(board);
-        window.location.href = '../Index/index.html';
+        window.location.href = './index.html';
     });
 }
 

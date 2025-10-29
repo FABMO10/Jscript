@@ -1,5 +1,5 @@
 body {
-  background-image: url("/Images/Dice.jpg");
+  background-image: url("../images/Dice.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   font-family: Arial, Helvetica, sans-serif;
@@ -71,7 +71,6 @@ h1 {
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
-  margin-bottom: 10px;
 }
 
 .note {

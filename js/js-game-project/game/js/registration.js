@@ -85,6 +85,6 @@ document.getElementById('regForm')?.addEventListener('submit', (e) => {
     e.target.reset();
 
     setTimeout(function () {
-        window.location.href = "../Index/index.html"
+       window.location.href = "./index.html"
     }, 2000);
 });

@@ -83,7 +83,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Redirect after 2 seconds
     setTimeout(() => {
-      window.location.href = '../Game/game.html';
+      // If user logs in *from inside game.html*, just close the modal
+if (window.location.pathname.includes("game.html")) {
+  document.getElementById("loginModal").style.display = "none";
+  document.getElementById("rollBtn").disabled = false;
+} else {
+  window.location.href = "./game.html";
+}
     }, 2000);
   });
 });
