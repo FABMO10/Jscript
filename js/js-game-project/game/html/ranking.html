@@ -1,38 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html> <!-- HTML5 doctype -->
+<html lang="en"> <!-- Page language is English -->
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Leaderboard</title>
-    <link rel="stylesheet" href="../css/ranking.css">
-<script src="../js/ranking.js" defer></script>
+    <meta charset="UTF-8" /> <!-- Use UTF-8 character encoding -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- Mobile-friendly scaling -->
+    <title>Leaderboard</title> <!-- Browser tab title -->
+    <link rel="stylesheet" href="../css/ranking.css"> <!-- Page styles for leaderboard -->
+    <script src="../js/ranking.js" defer></script> <!-- JS that renders/populates the table; defer = run after parse -->
   </head>
   <body>
     <header>
-      <nav class="top-nav" aria-label="Main">
-        <ul>
-          <a href="./index.html">ABOUT</a>
-<a href="./game.html">START GAME</a>
-<a href="./ranking.html">RANKING</a>
-<a href="./registration.html">REGISTER</a>
+      <nav class="top-nav" aria-label="Main"> <!-- Top navigation bar -->
+        <ul> <!-- Note: anchors are direct children (often these are wrapped in <li>) -->
+          <a href="./index.html">ABOUT</a> <!-- Link to About page -->
+          <a href="./game.html">START GAME</a> <!-- Link to Game page -->
+          <a href="./ranking.html">RANKING</a> <!-- Link to the current Leaderboard page -->
+          <a href="./registration.html">REGISTER</a> <!-- Link to Registration page -->
         </ul>
       </nav>
     </header>
     <main>
-      <div class="wrap">
-        <div class="card">
-          <h1>Leaderboard</h1>
+      <div class="wrap"> <!-- Layout container -->
+        <div class="card"> <!-- Card-style panel for the leaderboard -->
+          <h1>Leaderboard</h1> <!-- Page heading -->
 
-          <table>
-            <thead>
+          <table> <!-- Score table -->
+            <thead> <!-- Column headers -->
               <tr>
-                <th class="rank">#</th>
-                <th>Name</th>
-                <th>Score</th>
+                <th class="rank">#</th> <!-- Rank number -->
+                <th>Name</th> <!-- Player name -->
+                <th>Score</th> <!-- Player score -->
               </tr>
             </thead>
 
-            <tbody id="rankingBody"></tbody>
+            <tbody id="rankingBody"></tbody> <!-- Table body filled by ranking.js at runtime -->
           </table>
         </div>
       </div>

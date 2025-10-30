@@ -1,151 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html> <!-- HTML5 doctype -->
+<html lang="en"> <!-- Document language set to English -->
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Craps</title>
+  <meta charset="UTF-8" /> <!-- Character encoding -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/> <!-- Responsive scaling on mobile -->
+  <title>Craps</title> <!-- Browser tab title -->
 
   <!-- Page styles -->
-  <link rel="stylesheet" href="../css/game.css" />
-  <!-- Optional: if your base card/button styles live in style.css, include it too -->
-  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/game.css" /> <!-- Game-specific styles -->
+  <link rel="stylesheet" href="../css/style.css" /> <!-- Shared/global styles -->
 
-  <!-- Login logic (reused from index) -->
-  <script src="../js/script.js" defer></script>
+  <!-- Login logic (index login script) -->
+  <script src="../js/script.js" defer></script> <!-- Handles login; defer: run after HTML parsed -->
 
-  <!-- Game logic (module imports data.js & dice_ui.js internally) -->
-  <script type="module" src="../js/game.js" defer></script>
-
-  <style>
-    /* Lightweight modal overlay (kept here for self-containment). 
-       If you prefer, move to game.css. */
-    .login-modal {
-  position: fixed;
-  top: 60px; /* leaves space for navbar */
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0,0,0,.6);
-  z-index: 999;
-}
-header, nav, .top-nav {
-  z-index: 10000;
-  position: relative;
-}
-
-    .login-card {
-      max-width: 380px;
-      width: 100%;
-      background: #fff;
-      border-radius: 12px;
-      padding: 1.25rem 1.25rem 1rem;
-      box-shadow: 0 10px 30px rgba(0,0,0,.25);
-    }
-    .login-card h2 { margin: 0 0 .75rem; text-align: center; }
-    .login-card .inputs {
-      display: grid; gap: .75rem; margin-bottom: .75rem;
-    }
-    .login-card input {
-      font: inherit; padding: .65rem .8rem; border-radius: 8px; border: 1px solid #ddd;
-    }
-    .login-card .btn {
-      width: 100%; padding: .7rem .9rem; border: 0; border-radius: 10px; cursor: pointer;
-    }
-    .login-card .note { margin-top: .5rem; font-size: .9rem; text-align: center; }
-  </style>
+  <!-- Game logic -->
+  <script type="module" src="../js/game.js" defer></script> <!-- ES module with game rules/UI wiring -->
 </head>
+
 <body>
   <header>
-    <nav class="top-nav">
+    <nav class="top-nav"> <!-- Top navigation bar -->
       <ul>
-        <li><a href="./index.html">ABOUT</a></li>
-        <li><a href="./game.html">START GAME</a></li>
-        <li><a href="./ranking.html">RANKING</a></li>
-        <li><a href="./registration.html">REGISTER</a></li>
+        <li><a href="./index.html">ABOUT</a></li> <!-- Link to About page -->
+        <li><a href="./game.html">START GAME</a></li> <!-- Link to Game (this page) -->
+        <li><a href="./ranking.html">RANKING</a></li> <!-- Link to Leaderboard -->
+        <li><a href="./registration.html">REGISTER</a></li> <!-- Link to Registration -->
       </ul>
     </nav>
   </header>
 
   <main>
-    <div class="wrap">
-      <div class="card">
-        <div class="row">
+    <div class="wrap"> <!-- Layout wrapper -->
+      <div class="card"> <!-- Card-style container -->
+        <div class="row"> <!-- Header row: title, description, greeting -->
           <div>
-            <h1>CRAPS!!</h1>
+            <h1>CRAPS!!</h1> <!-- Page heading -->
             <div class="descr">
               Click Roll to play. Natural (7/11) wins, Craps (2/3/12) loses,
               otherwise play the point.
-            </div>
-            <div class="descr" id="helloUser"></div>
+            </div> <!-- Rules summary -->
+            <div class="descr" id="helloUser"></div> <!-- Filled by JS with "Logged in as ..." -->
           </div>
-          <div class="stats">
-            <!-- wins/losses are optional; game.js/dice_ui.js handle if missing -->
-            <!-- <span class="pill">Wins: <b id="wins">0</b></span>
-                 <span class="pill">Losses: <b id="losses">0</b></span> -->
-            <span class="pill">Score: <b id="score">0</b></span>
+
+          <div class="stats"> <!-- Stats badges -->
+            <span class="pill">Score: <b id="score">0</b></span> <!-- Live score value -->
           </div>
-          <div class="result" id="resultText"></div>
+
+          <div class="result" id="resultText"></div> <!-- Outcome/result text from rolls -->
         </div>
 
-        <div class="dice-wrap">
-          <div id="die1" class="die"></div>
-          <div id="die2" class="die"></div>
+        <div class="dice-wrap"> <!-- Visual dice area -->
+          <div id="die1" class="die"></div> <!-- Die 1 (drawn via JS) -->
+          <div id="die2" class="die"></div> <!-- Die 2 (drawn via JS) -->
         </div>
 
-        <div class="row">
-          <button id="rollBtn" class="btn btn-roll">🎲 Roll</button>
-          <button id="exitBtn" class="btn btn-exit">Exit ↗️</button>
+        <div class="row"> <!-- Controls row -->
+          <button id="rollBtn" class="btn btn-roll">🎲 Roll</button> <!-- Roll dice button -->
+          <button id="exitBtn" class="btn btn-exit">Exit ↗️</button> <!-- Exit/update leaderboard & leave -->
         </div>
       </div>
     </div>
+    
+    <!-- Main content ends here -->
+      
+    
   </main>
 
-  <!-- LOGIN MODAL (only shown if not logged in) -->
-  <div id="loginModal" class="login-modal" aria-hidden="true">
-    <div class="card login-card">
-      <form id="logForm" novalidate>
-        <h2>LOGIN TO PLAY</h2>
-        <div class="inputs">
-          <input id="username" name="user" type="text" placeholder="Username" required />
-          <input id="password" name="password" type="password" placeholder="Password" required />
-        </div>
-        <button class="btn" id="loginBtn" type="submit">LOGIN</button>
-        <div id="confirmation" class="note"></div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Gate the game behind login -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const modal = document.getElementById('loginModal');
-      const rollBtn = document.getElementById('rollBtn');
-
-      const hasUser = !!localStorage.getItem('currentUser');
-      if (!hasUser) {
-        modal.style.display = 'flex';
-        if (rollBtn) rollBtn.disabled = true;
-      } else {
-        modal.style.display = 'none';
-      }
-
-      // If login happens in another tab, update instantly
-      window.addEventListener('storage', (e) => {
-        if (e.key === 'currentUser') {
-          const nowHasUser = !!localStorage.getItem('currentUser');
-          modal.style.display = nowHasUser ? 'none' : 'flex';
-          if (rollBtn) rollBtn.disabled = !nowHasUser;
-        }
-      });
-    });
-    document.querySelectorAll('.top-nav a').forEach(link => {
-  link.addEventListener('click', () => {
-    document.getElementById('loginModal').style.display = 'none';
-  });
-});
-  </script>
 </body>
 </html>

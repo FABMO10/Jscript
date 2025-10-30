@@ -1,53 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html> <!-- HTML5 doctype -->
+<html lang="en"> <!-- Page language set to English -->
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Craps Game</title>
-    <link rel="stylesheet" href="../css/style.css">
-<script src="../js/script.js" defer></script>
+    <meta charset="UTF-8" /> <!-- Character encoding -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- Responsive on mobile -->
+    <title>Craps Game</title> <!-- Browser tab title -->
+    <link rel="stylesheet" href="../css/style.css"> <!-- Main stylesheet for this page -->
+    <script src="../js/script.js" defer></script> <!-- Page logic; defer runs after HTML is parsed -->
   </head>
   <body>
-    <header class="site-header">
+    <header class="site-header"> <!-- Site header with branding and navigation -->
       <div class="brand">
-        <h1>WELCOME TO CRAPS!</h1>
+        <h1>WELCOME TO CRAPS!</h1> <!-- Site title -->
       </div>
-      <nav class="top-nav">
-        <ul>
-          <a href="./index.html">ABOUT</a>
-<a href="./game.html" id="startBtn">START GAME</a>
-<a href="./ranking.html">RANKING</a>
-<a href="./registration.html">REGISTER</a>
+      <nav class="top-nav"> <!-- Primary navigation -->
+        <ul> <!-- Note: anchors are direct children (often wrapped in <li>) -->
+          <a href="./index.html">ABOUT</a> <!-- Link to About page -->
+          <a href="./game.html" id="startBtn">START GAME</a> <!-- Link to Game page; also used by JS via #startBtn -->
+          <a href="./ranking.html">RANKING</a> <!-- Link to Leaderboard -->
+          <a href="./registration.html">REGISTER</a> <!-- Link to Registration -->
         </ul>
       </nav>
     </header>
-    <main class="card center-screen">
-      <form id="logForm">
-        <div class="inputs">
-          <h2>LOGIN TO START GAME</h2>
+    <main class="card center-screen"> <!-- Centered card-style main content -->
+      <form id="logForm"> <!-- Login form (handled by JS) -->
+        <div class="inputs"> <!-- Input fields wrapper -->
+          <h2>LOGIN TO START GAME</h2> <!-- Form heading -->
           <input
             id="username"
             name="user"
             type="text"
             placeholder="Username"
             required
-          />
+          /> <!-- Username input (required) -->
           <input
             id="password"
             name="password"
             type="password"
             placeholder="Password"
             required
-          />
+          /> <!-- Password input (required, masked) -->
         </div>
-        <button class="btn" id="loginBtn" type="submit">LOGIN</button>
+        <button class="btn" id="loginBtn" type="submit">LOGIN</button> <!-- Submit button -->
         <div id="message" hidden>
           Please enter your username and password to start the game.
-        </div>
-        <div id="confirmation" class="note"></div>
+        </div> <!-- Helper message shown by JS -->
+        <div id="confirmation" class="note"></div> <!-- Area to display login status/result -->
       </form>
-
-      
     </main>
   </body>
 </html>

@@ -164,13 +164,16 @@ h1 {
 .bad {
   color: #ef4444;
 }
-.modal {
-  position: fixed;
-  inset: 0;
-  display: none;               
-  align-items: center;
-  justify-content: center;
-  background: rgba(0,0,0,.4);
-  z-index: 1000;
-}
-.modal.show { display: flex; }
+/* Make the login card bigger, solid, and slightly higher */
+/* .card.center-screen { */
+  /* width: 420px;                 bigger width */
+  /* padding: 30px 35px;           more padding
+  background: #ffffff;          /* remove transparency */
+  /* border-radius: 14px; */
+  /* box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35); stronger shadow */
+  /* position: fixed; */
+  /* top: 342px;                    move card slightly up */
+  /* left: 50%; */
+  /* transform: translateX(-50%); */
+  /* z-index: 9999; */
+/* } */ 
