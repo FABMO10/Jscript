@@ -1,69 +1,86 @@
-<!DOCTYPE html> <!-- HTML5 doctype -->
-<html lang="en"> <!-- Document language set to English -->
-<head>
-  <meta charset="UTF-8" /> <!-- Character encoding -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/> <!-- Responsive scaling on mobile -->
-  <title>Craps</title> <!-- Browser tab title -->
+<!DOCTYPE html>
+<!-- HTML5 doctype -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Character encoding -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Responsive scaling on mobile -->
+    <title>Craps</title>
 
-  <!-- Page styles -->
-  <link rel="stylesheet" href="../css/game.css" /> <!-- Game-specific styles -->
-  <link rel="stylesheet" href="../css/style.css" /> <!-- Shared/global styles -->
+    <!-- Page styles -->
+    <link rel="stylesheet" href="../css/game.css" />
+  </head>
 
-  <!-- Login logic (index login script) -->
-  <script src="../js/script.js" defer></script> <!-- Handles login; defer: run after HTML parsed -->
+  <body>
+    <header>
+      <nav class="top-nav">
+        <!-- Top navigation bar -->
+        <ul>
+          <li><a href="./index.html">ABOUT</a></li>
+          <!-- Link to About page -->
+          <li><a href="./game.html">START GAME</a></li>
+          <!-- Link to Game (this page) -->
+          <li><a href="./ranking.html">RANKING</a></li>
+          <!-- Link to Leaderboard -->
+          <li><a href="./registration.html">REGISTER</a></li>
+          <!-- Link to Registration -->
+        </ul>
+      </nav>
+    </header>
 
-  <!-- Game logic -->
-  <script type="module" src="../js/game.js" defer></script> <!-- ES module with game rules/UI wiring -->
-</head>
+    <main>
+      <div class="wrap">
+        <!-- Layout wrapper -->
+        <div class="card">
+          <!-- Card-style container -->
+          <div class="row">
+            <!-- Header row: title, description, greeting -->
+            <div>
+              <h1>CRAPS!!</h1>
+              <!-- Page heading -->
+              <div class="descr">
+                Click Roll to play. Natural (7/11) wins, Craps (2/3/12) loses,
+                otherwise play the point.
+              </div>
+              <!-- Rules summary -->
+              <div class="descr" id="helloUser"></div>
+              <!-- Filled by JS with "Logged in as ..." -->
+            </div>
 
-<body>
-  <header>
-    <nav class="top-nav"> <!-- Top navigation bar -->
-      <ul>
-        <li><a href="./index.html">ABOUT</a></li> <!-- Link to About page -->
-        <li><a href="./game.html">START GAME</a></li> <!-- Link to Game (this page) -->
-        <li><a href="./ranking.html">RANKING</a></li> <!-- Link to Leaderboard -->
-        <li><a href="./registration.html">REGISTER</a></li> <!-- Link to Registration -->
-      </ul>
-    </nav>
-  </header>
+            <div class="stats">
+              <!-- Stats badges -->
+              <span class="pill">Score: <b id="score">0</b></span>
+              <!-- Live score value -->
+            </div>
 
-  <main>
-    <div class="wrap"> <!-- Layout wrapper -->
-      <div class="card"> <!-- Card-style container -->
-        <div class="row"> <!-- Header row: title, description, greeting -->
-          <div>
-            <h1>CRAPS!!</h1> <!-- Page heading -->
-            <div class="descr">
-              Click Roll to play. Natural (7/11) wins, Craps (2/3/12) loses,
-              otherwise play the point.
-            </div> <!-- Rules summary -->
-            <div class="descr" id="helloUser"></div> <!-- Filled by JS with "Logged in as ..." -->
+            <div class="result" id="resultText"></div>
+            <!-- Outcome/result text from rolls -->
           </div>
 
-          <div class="stats"> <!-- Stats badges -->
-            <span class="pill">Score: <b id="score">0</b></span> <!-- Live score value -->
+          <div class="dice-wrap">
+            <!-- Visual dice area -->
+            <div id="die1" class="die"></div>
+            <!-- Die 1 (drawn via JS) -->
+            <div id="die2" class="die"></div>
+            <!-- Die 2 (drawn via JS) -->
           </div>
 
-          <div class="result" id="resultText"></div> <!-- Outcome/result text from rolls -->
-        </div>
-
-        <div class="dice-wrap"> <!-- Visual dice area -->
-          <div id="die1" class="die"></div> <!-- Die 1 (drawn via JS) -->
-          <div id="die2" class="die"></div> <!-- Die 2 (drawn via JS) -->
-        </div>
-
-        <div class="row"> <!-- Controls row -->
-          <button id="rollBtn" class="btn btn-roll">🎲 Roll</button> <!-- Roll dice button -->
-          <button id="exitBtn" class="btn btn-exit">Exit ↗️</button> <!-- Exit/update leaderboard & leave -->
+          <div class="row">
+            <!-- Controls row -->
+            <button id="rollBtn" class="btn btn-roll">🎲 Roll</button>
+            <!-- Roll dice button -->
+            <button id="exitBtn" class="btn btn-exit">Exit ↗️</button>
+            <!-- Exit/update leaderboard & leave -->
+          </div>
         </div>
       </div>
-    </div>
-    
-    <!-- Main content ends here -->
-      
-    
-  </main>
 
-</body>
+      <!-- Main content ends here -->
+
+      <!-- Game logic -->
+      <script type="module" src="../js/game.js" defer></script>
+      <!-- ES module with game rules/UI wiring -->
+    </main>
+  </body>
 </html>

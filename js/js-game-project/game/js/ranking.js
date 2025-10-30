@@ -1,18 +1,35 @@
+// Key used to store the leaderboard array in localStorage
 const LEADERBOARD_KEY = 'leaderboard';
+
+// Initialise the leaderboard in storage the first time the app runs
 if (!localStorage.getItem(LEADERBOARD_KEY)) {
-  localStorage.setItem(LEADERBOARD_KEY, '[]');
+  localStorage.setItem(LEADERBOARD_KEY, '[]'); // store an empty JSON array
 }
 
+/**
+ * Load and parse the leaderboard from localStorage.
+ * Returns a safe empty array if the data is missing or malformed.
+ */
 function _lbLoad() {
   const raw = localStorage.getItem(LEADERBOARD_KEY);
   if (!raw) return [];
   const t = raw.trim();
-  if (!(t.startsWith('[') && t.endsWith(']'))) return [];
+  // quick sanity check before JSON.parse to avoid throwing on garbage
+  if (!(t.startsWith('[') && t.endsWith(']'))) return []; // [{ username, score }, ...]
   return JSON.parse(t);
 }
 
+/**
+ * Normalise a name: collapse internal whitespace and trim.
+ * Helps keep sorting and display consistent.
+ */
 function _normName(s) { return (s || '').replace(/\s+/g, ' ').trim(); }
 
+/**
+ * Return a new array sorted by:
+ *  1) score descending
+ *  2) username ascending
+ */
 function _sortByScore(board) {
   return [...board].sort((a, b) => {
     const sa = Number(a.score || 0), sb = Number(b.score || 0);
@@ -21,6 +38,7 @@ function _sortByScore(board) {
   });
 }
 
+// new score -> new rank position
 function _addRanks(sorted) {
   // ties share rank by score
   let rank = 0, prevScore = null;
@@ -31,6 +49,10 @@ function _addRanks(sorted) {
   });
 }
 
+/**
+ * Render the leaderboard rows into a <tbody> (default id="rankingBody").
+ * If the board is empty, show a friendly placeholder row.
+ */
 function renderRankingBody(tbodyId = 'rankingBody') {
   const tbody = document.getElementById(tbodyId);
   if (!tbody) return;
@@ -38,8 +60,10 @@ function renderRankingBody(tbodyId = 'rankingBody') {
   const board = _lbLoad();
   const ranked = _addRanks(_sortByScore(board));
 
+  // Clear current rows
   tbody.innerHTML = '';
 
+  // Empty state
   if (ranked.length === 0) {
     const tr = document.createElement('tr');
     tr.innerHTML = `<td colspan="3" style="text-align:center;">No entries yet — finish a game to appear here.</td>`;
@@ -47,6 +71,7 @@ function renderRankingBody(tbodyId = 'rankingBody') {
     return;
   }
 
+  // Populate table with rank, username, score
   ranked.forEach(({ rank, username, score }) => {
     const tr = document.createElement('tr');
     tr.innerHTML = `
@@ -63,6 +88,7 @@ window.addEventListener('storage', (e) => {
   if (e.key === LEADERBOARD_KEY) renderRankingBody();
 });
 
+// Initial render once the DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
   renderRankingBody();
 });

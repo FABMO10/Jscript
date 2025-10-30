@@ -1,45 +1,63 @@
-<!DOCTYPE html> <!-- HTML5 doctype declaration -->
-<html lang="en"> <!-- Document language set to English -->
+<!DOCTYPE html>
+<!-- HTML5 doctype declaration -->
+<html lang="en">
+  <!-- Document language set to English -->
   <head>
-    <meta charset="UTF-8" /> <!-- Use UTF-8 character encoding -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- Responsive scaling on mobile -->
-    <title>New User</title> <!-- Browser tab/title bar text -->
-    <link rel="stylesheet" href="../css/registration.css"> <!-- Page-specific stylesheet -->
-    <script src="../js/registration.js" defer></script> <!-- Registration logic; defer = run after HTML parsed -->
+    <meta charset="UTF-8" />
+    <!-- Use UTF-8 character encoding -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Responsive scaling on mobile -->
+    <title>New User</title>
+    <link rel="stylesheet" href="../css/registration.css" />
+    <!-- Page-specific stylesheet -->
   </head>
   <body>
     <header>
-      <nav class="top-nav"> <!-- Top navigation bar -->
-        <ul> <!-- NOTE: anchors are direct children here; typically these would be <li> items -->
-          <a href="./index.html">ABOUT</a> <!-- Link to About page -->
-          <a href="./game.html">START GAME</a> <!-- Link to Game page -->
-          <a href="./ranking.html">RANKING</a> <!-- Link to Ranking/Leaderboard page -->
-          <a href="./registration.html">REGISTER</a> <!-- Link to Registration page (this page) -->
+      <nav class="top-nav">
+        <!-- Top navigation bar -->
+        <ul>
+          <!-- NOTE: anchors are direct children here; typically these would be <li> items -->
+          <a href="./index.html">ABOUT</a>
+          <!-- Link to About page -->
+          <a href="./index.html">START GAME</a>
+          <!-- Link to Game page -->
+          <a href="./ranking.html">RANKING</a>
+          <!-- Link to Ranking/Leaderboard page -->
+          <a href="./registration.html">REGISTER</a>
+          <!-- Link to Registration page (this page) -->
         </ul>
       </nav>
     </header>
     <main>
-      <div class="center-screen"> <!-- Centers the card on the screen via CSS -->
-        <div class="card"> <!-- Visual container/card for the form -->
-          <h2 id="newUserHeading">New User?</h2> <!-- Section heading -->
-          <p>Register here</p> <!-- Short intro text -->
+      <div class="center-screen">
+        <!-- Centers the card on the screen via CSS -->
+        <div class="card">
+          <!-- Visual container/card for the form -->
+          <h2 id="newUserHeading">New User?</h2>
+          <!-- Section heading -->
+          <p>Register here</p>
+          <!-- Short intro text -->
 
-          <form action="" id="regForm"> <!-- Registration form; handled by JS (no action URL) -->
-            <div class="inputs"> <!-- Wrapper for input fields -->
+          <form action="" id="regForm">
+            <!-- Registration form; handled by JS (no action URL) -->
+            <div class="inputs">
+              <!-- Wrapper for input fields -->
               <input
                 id="firstName"
                 name="firstName"
                 type="text"
                 placeholder="First Name"
                 required
-              /> <!-- First name (required) -->
+              />
+              <!-- First name (required) -->
               <input
                 id="lastName"
                 name="lastName"
                 type="text"
                 placeholder="Last Name"
                 required
-              /> <!-- Last name (required) -->
+              />
+              <!-- Last name (required) -->
 
               <input
                 id="userName"
@@ -47,24 +65,31 @@
                 type="text"
                 placeholder="User Name"
                 required
-              /> <!-- Username (required) -->
+              />
+              <!-- Username (required) -->
               <input
                 id="password"
                 name="password"
                 type="password"
                 placeholder="Password"
                 required
-              /> <!-- Password (required, masked input) -->
+              />
+              <!-- Password (required, masked input) -->
             </div>
 
-            <button class="btn" type="submit">Register</button> <!-- Submit button -->
+            <button class="btn" type="submit">Register</button>
+            <!-- Submit button -->
           </form>
 
-          <div id="new_USER" style="display: none"></div> <!-- Optional debug/output area for created user JSON -->
+          <div id="new_USER" style="display: none"></div>
+          <!-- Optional debug/output area for created user JSON -->
 
-          <div id="confirmation" class="note"></div> <!-- Status/confirmation messages appear here -->
+          <div id="confirmation" class="note"></div>
+          <!-- Status/confirmation messages appear here -->
         </div>
       </div>
     </main>
+    <script src="../js/registration.js" defer></script>
+    <!-- Registration logic; defer = run after HTML parsed -->
   </body>
 </html>

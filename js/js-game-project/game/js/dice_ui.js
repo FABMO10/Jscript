@@ -1,9 +1,6 @@
-// dice_ui.js // file name for context
-// Dice rendering + animation + page UI binding (no game rules here) // describes responsibility of this module
-
 export class DiceUI { // export a class that handles dice visuals and animation
-    static setFace(el, value) { // static method: draw a die face inside element `el` for number `value` (1–6)
-        if (!el) return; // guard: do nothing if no element was passed
+    static setFace(el, value) { // draw a die face inside element `el` for number `value` (1–6)
+        if (!el) return; // do nothing if no element was passed
         el.innerHTML = ''; // clear previous pips from the die
         const positions = { // mapping of die value to which 3x3 grid cells should contain pips
             1: [5], 2: [1, 9], 3: [1, 5, 9], // indexes into a 3x3 grid for 1–3
@@ -27,7 +24,7 @@ export class DiceUI { // export a class that handles dice visuals and animation
     static roll1to6() { return Math.floor(Math.random() * 6) + 1; } // utility: random integer 1–6 inclusive
 
     static animate(d1, d2, onDone, { steps = 8, intervalMs = 70 } = {}) { // animate two dice, then call onDone with final values; configurable steps/speed
-        if (!d1 || !d2) return; // guard: need both dice elements to animate
+        if (!d1 || !d2) return; // need both dice elements to animate
         d1.classList.add('rolling'); // add rolling class to die 1 for CSS animation cues
         d2.classList.add('rolling'); // add rolling class to die 2 for CSS animation cues
 
@@ -125,7 +122,7 @@ export function bindUI(game) { // wire up DOM controls and counters to a provide
 
                 renderCounters(); // refresh wins/losses/cash after the roll
                 rollBtn.disabled = false; // re-enable button for next roll
-            }); // end animate callback
-        }); // end click handler
-    } // end if(rollBtn)
-} // end bindUI
+            });
+        });
+    }
+} 

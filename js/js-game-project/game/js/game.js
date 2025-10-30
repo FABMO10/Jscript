@@ -1,6 +1,3 @@
-// game.js // file name/context
-// Craps rules + leaderboard + bootstrapping // describes module purpose
-
 import {
     persistCashToUser, readStoredScore, writeStoredScore,
     loadBoard, saveBoard, getCurrentUser
@@ -8,8 +5,8 @@ import {
 import { bindUI } from './dice_ui.js'; // import function that wires game state to the DOM
 
 // ---- Craps rules ----
-const isNatural = (sum) => sum === 7 || sum === 11; // helper: true if come-out roll wins (7 or 11)
-const isCraps = (sum) => sum === 2 || sum === 3 || sum === 12; // helper: true if come-out roll loses (2, 3, 12)
+const isNatural = (sum) => sum === 7 || sum === 11; // true if come-out roll wins (7 or 11)
+const isCraps = (sum) => sum === 2 || sum === 3 || sum === 12; // true if come-out roll loses (2, 3, 12)
 
 class CrapsGame { // class encapsulating game state and rules
     constructor({ initialCash = 100, bet = 50 } = {}) { // constructor with defaults for cash and bet
@@ -32,11 +29,11 @@ class CrapsGame { // class encapsulating game state and rules
         return this.score; // return new score
     }
 
-    applyRoll(sum) { // core state machine: apply the result of rolling two dice (sum)
-        if (this.gameOver) return { kind: 'error', message: 'No cash left. Game over.' }; // stop if bankrupt
+    applyRoll(sum) { // apply the result of rolling two dice (sum)
+        if (this.gameOver) return { kind: 'error', message: 'No cash left. Game over.' }; // stop if cash becomes 0
 
         // Come-out
-        if (this.point === null) { // if no point established yet (come-out phase)
+        if (this.point === null) { // if no point established yet 
             if (isNatural(sum)) { // natural 7 or 11 => immediate win
                 this.wins++; this.cash += this.bet; persistCashToUser(this.cash); // tally win, add cash, persist
                 this.bumpScore(5); // add to score for win
@@ -68,20 +65,20 @@ class CrapsGame { // class encapsulating game state and rules
             this._reset(); this._checkBankrupt(); return info; // clear point, check cash, return
         }
 
-        return { kind: 'continue', phase: 'point', point: this.point, message: `Still aiming for ${this.point}.` }; // any other sum: continue rolling
+        return { kind: 'continue', phase: 'point', point: this.point, message: `Still aiming for ${this.point}.` }; // any other sum, continue rolling
     }
 
-    _reset() { this.point = null; } // internal: clear point to return to come-out phase
-    _checkBankrupt() { if (this.cash <= 0) this.gameOver = true; } // internal: set gameOver if out of cash
+    _reset() { this.point = null; } // clear point to return to come-out phase
+    _checkBankrupt() { if (this.cash <= 0) this.gameOver = true; } // set gameOver if out of cash
 }
 
 // ---- Leaderboard + exit ----
-function setupExitButton(game, exitBtnId = 'exitBtn') { // wire the "Exit" button to update leaderboard and leave page
+function setupExitButton(game, exitBtnId = 'exitBtn') { // click on the "Exit" button to update leaderboard and leave page
     const btn = document.getElementById(exitBtnId); // find exit button by id
     if (!btn) return; // if not present, do nothing
 
     btn.addEventListener('click', () => { // on clicking exit
-        const me = getCurrentUser(); // get current user (may be null)
+        const me = getCurrentUser(); // get current user
         const displayName =
             (me && (me.username || [me.firstName, me.lastName].filter(Boolean).join(' '))) || 'Guest'; // prefer username; else "First Last"; else 'Guest'
         const nameNorm = (displayName || '').replace(/\s+/g, ' ').trim(); // normalize whitespace for comparisons
@@ -93,12 +90,12 @@ function setupExitButton(game, exitBtnId = 'exitBtn') { // wire the "Exit" butto
 
         const currentScore = Number.isFinite(+game.score) ? +game.score : 0; // ensure numeric score
 
-        if (idx === -1) board.push({ username: nameNorm, score: currentScore }); // no record: add new entry
-        else board[idx].score = Math.max(Number(board[idx].score || 0), currentScore); // existing: keep best/highest score
+        if (idx === -1) board.push({ username: nameNorm, score: currentScore }); // no record, add new entry
+        else board[idx].score = Math.max(Number(board[idx].score || 0), currentScore); // existing, keep best/highest score
 
         saveBoard(board); // persist updated leaderboard
         window.location.href = './index.html'; // navigate back to home/index page
-    }); // end click handler
+    });
 }
 
 function greet() { // update greeting text based on login status
@@ -118,4 +115,4 @@ document.addEventListener('DOMContentLoaded', () => { // when DOM is ready, boot
     bindUI(game); // bind UI controls and counters to this game
     setupExitButton(game, 'exitBtn'); // hook up the exit button behavior
     greet(); // set greeting text
-}); // end DOMContentLoaded handler
+});

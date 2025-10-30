@@ -1,3 +1,4 @@
+/* Body Css */
 body {
   background-image: url("../images/Dice.jpg");
   background-size: cover;
@@ -11,6 +12,7 @@ h1 {
   text-align: center;
 }
 
+/* To make the card in the center */
 .center-screen {
   position: absolute;
   left: 50%;
@@ -29,6 +31,7 @@ h1 {
   text-align: center;
 }
 
+/* CSS for the input fields */
 .inputs input {
   flex: 1;
   min-width: 0;
@@ -39,6 +42,7 @@ h1 {
   margin: 10px 0;
 }
 
+/* Navigation Bar */
 .top-nav {
   position: absolute;
   right: 20px;
@@ -73,6 +77,7 @@ h1 {
   font-weight: 600;
 }
 
+/* CSS for the prompts */
 .note {
   margin-top: 10px;
   font-size: 13px;

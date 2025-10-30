@@ -5,6 +5,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Navigation bar */
 .top-nav {
   position: absolute;
   right: 20px;
@@ -28,6 +29,7 @@ body {
   text-decoration: none;
 }
 
+/* Card design */
 .wrap {
   min-height: 100%;
   display: grid;
@@ -48,6 +50,7 @@ h1 {
   font-size: 22px;
 }
 
+/* Table for sorting the players */
 table {
   width: 100%;
   border-collapse: collapse;
